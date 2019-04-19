@@ -15,27 +15,28 @@ def twitusers(input):
     here. Please refer to the paper.)
     """
     api = authorization.my_auth()
-    with open('finaluserlist.txt', 'w', encoding='utf-8') as f:
+    with open(input+'.txt', 'w', encoding='utf-8') as f:
         f.write(
             "userID" + "\t" + "name" + "\t" + "screen_name" + "\t" + "followers_count" + "\t" + "following_count" + "\t" + "# of tweets" + "\t" + "lang" + "\n")
-    with open('errorID.txt', 'w', encoding='utf-8') as f:
+    with open(input+'_errorID.txt', 'w', encoding='utf-8') as f:
         f.write("")
 
     for uid in input:
         try:
             user_data = api.get_user(int(uid))
-            if user_data.followers_count < 1000 and user_data.protected is False:
-                userID = user_data.id_str
-                name = user_data.name
-                screen_name = user_data.screen_name
-                followers_count = str(user_data.followers_count)
-                following_count = str(user_data.friends_count)
-                statuses_count = str(user_data.statuses_count)
-                language = user_data.lang
-                print(name+"\n")
-                with open('finaluserlist.txt', 'a', encoding='utf-8') as f:
-                    f.write(
-                        userID + "\t" + name + "\t" + screen_name + "\t" + followers_count + "\t" + following_count + "\t" + statuses_count + "\t" + language + "\n")
+            if user_data.followers_count < 5000 and user_data.followers_count > 50:
+                if user_data.protected is False:
+                    userID = user_data.id_str
+                    name = user_data.name
+                    screen_name = user_data.screen_name
+                    followers_count = str(user_data.followers_count)
+                    following_count = str(user_data.friends_count)
+                    statuses_count = str(user_data.statuses_count)
+                    language = user_data.lang
+                    print(name+"\n")
+                    with open(input+'.txt', 'a', encoding='utf-8') as f:
+                        f.write(
+                            userID + "\t" + name + "\t" + screen_name + "\t" + followers_count + "\t" + following_count + "\t" + statuses_count + "\t" + language + "\n")
         except:
-            with open('errorID.txt', 'a') as f:
+            with open(input+'_errorID.txt', 'a') as f:
                 f.write(uid + "\n")

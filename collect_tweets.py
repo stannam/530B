@@ -77,7 +77,6 @@ def collect_tweets(category):
             f.write(log+"\n")
 
 
-
 def tweet_cleaner(twit_dict):
     """
     :param twit_dict: retrieved tweet in the dict type
@@ -100,8 +99,3 @@ def tweet_cleaner(twit_dict):
             return tweet_message
     except:
         pass
-
-
-if __name__ == "__main__":
-    api = authorization.my_auth()
-    collect_tweets('finaluserlist_liberal')
